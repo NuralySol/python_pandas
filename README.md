@@ -1,30 +1,5 @@
 # Pandas and Api ( Python Data Science!)
 
-# Pandas and Data Science: A Comprehensive Guide
-
-## Table of Contents
-
-1. [Introduction to Pandas](#introduction-to-pandas)
-2. [Key Pandas Operations](#key-pandas-operations)
-   - [DataFrames](#dataframes)
-   - [Series](#series)
-   - [Reading Data](#reading-data)
-   - [Data Cleaning](#data-cleaning)
-   - [Manipulating Data](#manipulating-data)
-   - [Grouping and Aggregating](#grouping-and-aggregating)
-   - [Merging and Joining](#merging-and-joining)
-3. [Data Visualization](#data-visualization)
-4. [Data Science Workflow](#data-science-workflow)
-   - [Data Collection](#data-collection)
-   - [Data Wrangling](#data-wrangling)
-   - [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
-   - [Model Building](#model-building)
-   - [Model Evaluation](#model-evaluation)
-   - [Model Deployment](#model-deployment)
-5. [Conclusion](#conclusion)
-
----
-
 ## Introduction to Pandas
 
 **Pandas** is a powerful Python library for data manipulation and analysis, built on top of NumPy. It provides flexible and intuitive data structures like **DataFrames** and **Series**, which allow for easy manipulation of structured data.
