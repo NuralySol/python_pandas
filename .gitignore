@@ -3,4 +3,4 @@ trivia_detailed_results.csv
 trivia_results.csv
 
 # Ignore the fixtures directory and its contents
-/fixtures/fixtures/trivia_fixture.json
+/fixtures/
