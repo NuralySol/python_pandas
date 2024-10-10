@@ -1,10 +1,10 @@
 
-#! create a 1-65 chessboard using the below modules and display it 8 x 8 
+#! create a 1-65 chessboard using the below modules and display it 8 x 8 using the tkinter for GUI!
 import tkinter as tk
 import pandas as pd
 import numpy as np
 
-# Step 1: Create an 8x8 grid using NumPy (representing a chessboard with values from 1 to 64)
+# Step 1: Create an 8x8 grid using NumPy (representing a chessboard with values from 1 to 64) last 65 num is exclusive
 chessboard_array = np.arange(1, 65).reshape(8, 8)
 
 # Step 2: Convert the NumPy array to a Pandas DataFrame
