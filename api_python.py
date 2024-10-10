@@ -5,14 +5,14 @@ import time
 import random
 import requests
 import pandas as pd
-import os
+import os  # this is a path module in order to create csv files or JSON fixtures. 
 
 
 #! API calls and trivia game using the above modules in Data Science environment Python
 #! Fetch trivia questions from an API in JSON format
-# Ask the user for the number of questions
+# Ask the user for the number of questions intify it
 num_questions = int(
-    input("Please enter the number of questions you want to play (between 1 and 10): ")
+    input("Please enter the number of questions you want to play (1-10): ")
 )
 
 # Ensure the number of questions is between 1 and 10
@@ -26,30 +26,33 @@ trivia_difficulty = input(
     "Please enter the difficulty of the game (easy, medium, or hard): "
 ).lower()
 
-#! while loop is good valid input using not in and also .lower() method for API call 
+#! while loop is good valid input using not in and also .lower() method for API call
 while trivia_difficulty not in ["easy", "medium", "hard"]:
     print("Invalid difficulty level. Please choose 'easy', 'medium', or 'hard'.")
     trivia_difficulty = input(
         "Please enter the difficulty of the game (easy, medium, or hard): "
     ).lower()
 
-# Output confirmation to play the game 
+# Output confirmation to play the game
 print(
     f"\nYou will play {num_questions} question(s) at {trivia_difficulty} difficulty level."
 )
 
 
+#! (9) is a general category in the API call string, use the f-string for dynamic game for num_questions and trivia difficulty
 def fetch_trivia_questions():
     url = f"https://opentdb.com/api.php?amount={num_questions}&category=9&difficulty={trivia_difficulty}&type=multiple"
     response = requests.get(url)
     if response.status_code == 200:
         return json.loads(response.text)["results"]
     else:
-        print("Failed to retrieve questions. Please check your internet connection.")
+        print(
+            "Failed to retrieve questions. Please check your internet connection."
+        )  #! 500 error or 404
         return []
 
 
-# Function to display question and choices with A, B, C, D format using enumerate
+# Function to display question and choices with A, B, C, D format using enumerate, also need html. module for entities
 def display_question(question_data):
     question = html.unescape(question_data["question"])
     correct_answer = html.unescape(question_data["correct_answer"])
@@ -57,14 +60,14 @@ def display_question(question_data):
         html.unescape(ans) for ans in question_data["incorrect_answers"]
     ]
 
-    # Combine correct and incorrect answers
+    # Combine correct and incorrect answers, shuffle them so that the user does not gues with last append!
     choices = incorrect_answers + [correct_answer]
     random.shuffle(choices)
 
     print("\nQuestion:")
     print(question)
 
-    # Assign letters A, B, C, D to the choices using enumerate
+    # Assign letters A, B, C, D to the choices using enumerate and for loop
     choice_letters = ["A", "B", "C", "D"]
 
     # Map of letter to choice
@@ -74,10 +77,14 @@ def display_question(question_data):
         print(f"{choice_letters[idx]}. {choice}")
         choice_mapping[choice_letters[idx]] = choice
 
-    return question, correct_answer, choice_mapping
+    return (
+        question,
+        correct_answer,
+        choice_mapping,
+    )  # return the variables to be called upon later.
 
 
-# Function to check the answer against the API
+# Function to check the answer against the API payload!
 def check_answer(correct_answer, user_answer, choice_mapping):
     if choice_mapping[user_answer.upper()] == correct_answer:
         print("Correct!")
@@ -94,7 +101,8 @@ def play_trivia_game():
     questions = fetch_trivia_questions()
     score = 0
     game_data = []
-
+    
+    # for loop with with try and except validator with: -> list user_answer not in ["A", "B", "C", "D"]: 
     for idx, question_data in enumerate(questions):
         question, correct_answer, choice_mapping = display_question(question_data)
         try:
@@ -108,9 +116,9 @@ def play_trivia_game():
 
         is_correct = check_answer(correct_answer, user_answer, choice_mapping)
         if is_correct:
-            score += 1
+            score += 1  # increament the score unlike JS language i++ it is different in Python!
 
-        # Store question, user's answer, and correctness
+        # Store question, user's answer, and correctness game_data main variable of storing data! dictionary type
         game_data.append(
             {
                 "Question": question,
@@ -120,20 +128,20 @@ def play_trivia_game():
             }
         )
 
-        time.sleep(1)  #! sleep for 1 sec to give time for user
+        time.sleep(1)  #! sleep for 1 sec to give time for user part of the time imported module!
 
     print(f"\nGame Over! Your final score is {score}/{len(questions)}.")
 
-    # Save results using pandas
+    # Save results using pandas also a dictionary. 
     results_data = {
         "Timestamp": [time.strftime("%Y-%m-%d %H:%M:%S")],
         "Score": [score],
         "Total Questions": [len(questions)],
     }
-
+    # csv using rows and columns part of the DataFrame class
     df_results = pd.DataFrame(results_data)
     df_results.to_csv("trivia_results.csv", mode="a", index=False, header=False)
-    print("Your score has been saved!")
+    print("Your score has been saved!") # print for user result!
 
     # Save detailed question and answer data in CSV for user
     df_game_data = pd.DataFrame(game_data)
