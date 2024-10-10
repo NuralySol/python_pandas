@@ -10,8 +10,37 @@ import os
 
 #! API calls and trivia game using the above modules in Data Science environment Python
 #! Fetch trivia questions from an API in JSON format
+# Ask the user for the number of questions
+num_questions = int(
+    input("Please enter the number of questions you want to play (between 1 and 10): ")
+)
+
+# Ensure the number of questions is between 1 and 10
+if num_questions > 10:
+    num_questions = 10
+elif num_questions < 1:
+    num_questions = 1
+
+# Ask the user for the difficulty of the trivia game
+trivia_difficulty = input(
+    "Please enter the difficulty of the game (easy, medium, or hard): "
+).lower()
+
+#! while loop is good valid input using not in and also .lower() method for API call 
+while trivia_difficulty not in ["easy", "medium", "hard"]:
+    print("Invalid difficulty level. Please choose 'easy', 'medium', or 'hard'.")
+    trivia_difficulty = input(
+        "Please enter the difficulty of the game (easy, medium, or hard): "
+    ).lower()
+
+# Output confirmation to play the game 
+print(
+    f"\nYou will play {num_questions} question(s) at {trivia_difficulty} difficulty level."
+)
+
+
 def fetch_trivia_questions():
-    url = "https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple"
+    url = f"https://opentdb.com/api.php?amount={num_questions}&category=9&difficulty={trivia_difficulty}&type=multiple"
     response = requests.get(url)
     if response.status_code == 200:
         return json.loads(response.text)["results"]
@@ -58,7 +87,7 @@ def check_answer(correct_answer, user_answer, choice_mapping):
         return False
 
 
-# Main function to play the game 
+# Main function to play the game
 def play_trivia_game():
     print("Welcome to the Trivia Game!")
 
