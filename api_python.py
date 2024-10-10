@@ -9,7 +9,7 @@ import pandas as pd
 import os  
 
 #! API calls and trivia game using the above modules in Data Science environment Python
-#! Fetch trivia questions from an API
+#! Fetch trivia questions from an API in JSON format
 def fetch_trivia_questions():
     url = "https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple"
     response = requests.get(url)
@@ -32,7 +32,7 @@ def display_question(question_data):
     print("\nQuestion:")
     print(question)
     
-    # Show options
+    # Show options for the player in the output
     for idx, choice in enumerate(choices, 1):
         print(f"{idx}. {choice}")
     
